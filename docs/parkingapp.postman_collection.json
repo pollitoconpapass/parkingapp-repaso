@@ -1,0 +1,233 @@
+{
+  "info": {
+    "name": "parkingapp",
+    "_postman_id": "2f6a8d14-7b3c-4e90-a5d1-6c8b9e0f3a27",
+    "description": "Coleccion de pruebas de ParkingApp API (repaso). Ejecute los requests en el orden en que aparecen. Para volver a empezar, detenga y vuelva a ejecutar la aplicacion (los datos iniciales se recargan al iniciar). Cada request indica su resultado esperado y trae pruebas automaticas.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "stays",
+      "description": "Registrar estadia.",
+      "item": [
+        {
+          "name": "Registrar estadia - caso 1 (auto)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo de respuesta 201\", function () { pm.response.to.have.status(201); });",
+                  "pm.test(\"Cobro 25.00\", function () { var j = pm.response.json(); pm.expect(j.id).to.eql(2); pm.expect(j.plate).to.eql(\"ABC-123\"); pm.expect(j.lotName).to.eql(\"Playa Centro\"); pm.expect(j.hours).to.eql(5); pm.expect(j.charge).to.eql(25.00); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/stays",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "stays"
+              ]
+            },
+            "description": "Resultado esperado: 201 Created | id 2 | ABC-123 | Playa Centro | hours 5 | charge 25.00.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicleId\": 1,\n  \"lotId\": 1,\n  \"hours\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Registrar estadia - caso 2 (camioneta)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo de respuesta 201\", function () { pm.response.to.have.status(201); });",
+                  "pm.test(\"Cobro 30.00\", function () { var j = pm.response.json(); pm.expect(j.id).to.eql(3); pm.expect(j.plate).to.eql(\"XYZ-789\"); pm.expect(j.lotName).to.eql(\"Playa Centro\"); pm.expect(j.hours).to.eql(5); pm.expect(j.charge).to.eql(30.00); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/stays",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "stays"
+              ]
+            },
+            "description": "Resultado esperado: 201 Created | id 3 | XYZ-789 | Playa Centro | hours 5 | charge 30.00.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicleId\": 2,\n  \"lotId\": 1,\n  \"hours\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Registrar estadia - caso 3 (socio, cobro minimo)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo de respuesta 201\", function () { pm.response.to.have.status(201); });",
+                  "pm.test(\"Cobro 5.00\", function () { var j = pm.response.json(); pm.expect(j.id).to.eql(4); pm.expect(j.plate).to.eql(\"MOT-456\"); pm.expect(j.lotName).to.eql(\"Playa Centro\"); pm.expect(j.hours).to.eql(1); pm.expect(j.charge).to.eql(5.00); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/stays",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "stays"
+              ]
+            },
+            "description": "Resultado esperado: 201 Created | id 4 | MOT-456 | Playa Centro | hours 1 | charge 5.00.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicleId\": 3,\n  \"lotId\": 1,\n  \"hours\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Registrar estadia - caso alternativo (409)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo de respuesta 409\", function () { pm.response.to.have.status(409); });",
+                  "pm.test(\"Mensaje: La playa no tiene espacios libres\", function () { pm.expect(pm.response.json().message).to.eql(\"La playa no tiene espacios libres\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/stays",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "stays"
+              ]
+            },
+            "description": "Resultado esperado: 409 Conflict | \"La playa no tiene espacios libres\".",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicleId\": 1,\n  \"lotId\": 2,\n  \"hours\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "reports",
+      "description": "Reporte de un vehiculo.",
+      "item": [
+        {
+          "name": "Reporte de un vehiculo - caso exitoso",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo de respuesta 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Reporte esperado\", function () { var j = pm.response.json(); pm.expect(j.plate).to.eql(\"ABC-123\"); pm.expect(j.totalStays).to.eql(2); pm.expect(j.totalHours).to.eql(8); pm.expect(j.totalCharged).to.eql(40.00); pm.expect(j.averageCharge).to.eql(20.00); pm.expect(j.highestCharge).to.eql(25.00); pm.expect(j.stays.length).to.eql(2); pm.expect(j.stays[0].lotName).to.eql(\"Playa Centro\"); pm.expect(j.stays[0].hours).to.eql(5); pm.expect(j.stays[0].charge).to.eql(25.00); pm.expect(j.stays[1].lotName).to.eql(\"Playa Centro\"); pm.expect(j.stays[1].hours).to.eql(3); pm.expect(j.stays[1].charge).to.eql(15.00); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/reports/vehicles/1/summary",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reports",
+                "vehicles",
+                "1",
+                "summary"
+              ]
+            },
+            "description": "Resultado esperado: 200 OK | ABC-123 | totalStays 2 | totalHours 8 | totalCharged 40.00 | averageCharge 20.00 | highestCharge 25.00."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api",
+      "type": "string"
+    }
+  ]
+}

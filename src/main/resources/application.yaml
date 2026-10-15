@@ -1,0 +1,17 @@
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/parkingapp}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:Cc12345678!}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop # crea las tablas al iniciar y las elimina al detener (no lo cambie)
+    show-sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always # carga data.sql despues de crear las tablas (no lo cambie)
