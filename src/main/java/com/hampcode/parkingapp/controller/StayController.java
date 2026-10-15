@@ -18,16 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/stays")
 public class StayController {
-    private final StayService stayService;
-
-    public StayController(StayService stayService){
-        this.stayService = stayService;
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public StayResponseDTO registrarEstadia(@Valid @RequestBody StayRequestDTO request) {        
-        return stayService.registrarVehiculo(request);
-    }
+    // TODO
     
 }

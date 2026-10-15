@@ -13,15 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("/reports")
 public class ReportController {
-    private final ReportService reportService;
-
-    public ReportController(ReportService reportService){
-        this.reportService = reportService;
-    }
-
-    @GetMapping("/vehicles/{id}/summary")
-    public VehicleReportResponseDTO getVehicleReport(@PathVariable Long id) {
-        return reportService.generateReport(id);
-    }
+    // TODO
     
 }
